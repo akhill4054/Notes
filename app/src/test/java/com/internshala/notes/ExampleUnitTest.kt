@@ -11,7 +11,12 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+    fun hypothesis_isCorrect() {
+        assertEquals(Sub().javaClass.simpleName, getTag(Sub()))
     }
+
+    private fun getTag(obj: Base): String = obj.javaClass.simpleName
+
+    open class Base
+    class Sub : Base()
 }

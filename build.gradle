@@ -18,8 +18,11 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
+}
+
+ext {
+    activityVersion = '1.2.3'
 }
 
 task clean(type: Delete) {
