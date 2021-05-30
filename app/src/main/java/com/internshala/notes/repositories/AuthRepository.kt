@@ -33,7 +33,7 @@ class AuthRepository private constructor(application: Application) {
         }
     }
 
-    fun isAuthenticated(): Boolean = _authStatus.value is Authenticated
+    private fun isAuthenticated(): Boolean = _authStatus.value is Authenticated
 
     suspend fun loginNewUser(user: User) {
         // Save the new user in prefs

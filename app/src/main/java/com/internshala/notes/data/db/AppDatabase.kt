@@ -4,12 +4,14 @@ import android.app.Application
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.internshala.notes.data.db.dao.NoteDao
 import com.internshala.notes.data.db.dao.UserDao
 import com.internshala.notes.data.models.Note
 import com.internshala.notes.data.models.User
 
-@Database(entities = [User::class, Note::class], version = 1)
+@Database(entities = [User::class, Note::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun userDao(): UserDao

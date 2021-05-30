@@ -8,7 +8,7 @@ import com.internshala.notes.data.models.User
 class PreferenceManager private constructor(application: Application) {
 
     private val _sharedPrefs = application.getSharedPreferences(
-        "${BuildConfig.APPLICATION_ID}.PREFS_FILE_KEY", Context.MODE_PRIVATE
+        "${BuildConfig.APPLICATION_ID}.ASSESSMENT.PREFS_FILE_KEY", Context.MODE_PRIVATE
     )
 
     fun getCurrentUser(): User? {

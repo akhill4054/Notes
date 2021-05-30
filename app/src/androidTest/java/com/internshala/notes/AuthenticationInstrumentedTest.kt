@@ -14,9 +14,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class AuthenticationInstrumentedTest {
     @Test
-    fun useAppContext() {
+    fun isSignedIn() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.internshala.notes", appContext.packageName)

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--  Text  -->
+    <style name="text_typical">
+        <item name="android:textSize">@dimen/text_typical</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!--  Button  -->
+    <style name="outlined_inactive" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?attr/colorSecondary</item>
+        <item name="rippleColor">?attr/colorSecondaryVariant</item>
+    </style>
+</resources>

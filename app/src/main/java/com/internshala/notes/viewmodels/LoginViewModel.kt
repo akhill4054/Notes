@@ -41,15 +41,19 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                 picUrl = account.photoUrl.toString(),
                 email = account.email
             )
-            viewModelScope.launch {
-                _authRepository.loginNewUser(user)
-            }
+            handleNewLogin(user)
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
             // Show error
             _loginStatus.value = LoginStatus.Error
+        }
+    }
+
+    private fun handleNewLogin(user: User) {
+        viewModelScope.launch {
+            _authRepository.loginNewUser(user)
         }
     }
 }

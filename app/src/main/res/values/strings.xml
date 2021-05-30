@@ -2,8 +2,12 @@
     <string name="app_name">Notes</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="welcome_to_app">Welcome to Notes!</string>
-    <string name="login">Log In</string>
+
+    <string name="welcome_to_app">Welcome to Notes</string>
+    <string name="login">Login</string>
     <string name="welcome_app_msg">Easily create and manage your notes.</string>
-    <string name="please_sign_in_to_continue">Please sign in to continue.</string>
+    <string name="please_sign_in_to_continue">Please sign in to continue</string>
+    <string name="add_another_account">Add another account</string>
+    <string name="profile_pic">Profile pic</string>
+    <string name="remove_account">Remove Account</string>
 </resources>

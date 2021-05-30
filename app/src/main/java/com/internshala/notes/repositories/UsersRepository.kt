@@ -20,17 +20,11 @@ class UsersRepository private constructor(application: Application) {
     }
 
     suspend fun removeUser(user: User) {
-        _userDao.delete(user)
+        _userDao.deleteByUserId(user.userId)
     }
 
     suspend fun getFirstUserFromUsers(): User? {
-        val users = _userDao.getFirstUserFromUsers()
-
-        return if (users.isNotEmpty()) {
-            users[0]
-        } else {
-            null
-        }
+        return _userDao.getFirstUserFromUsers()
     }
 
     fun getAllUsers(): LiveData<List<User>> = _userDao.getAllUsers()

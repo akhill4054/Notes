@@ -25,4 +25,13 @@ data class Note(
     val title: String = "",
     val note: String,
     val lastModified: Date,
-)
+    // 0 -> Ideal, 1 -> Archived, 2 -> Deleted
+    val status: Int = NOTE_STATUS_IDEAL,
+) {
+
+    companion object {
+        const val NOTE_STATUS_IDEAL = 0
+        const val NOTE_STATUS_ARCHIVED = 1
+        const val NOTE_STATUS_DELETED = 2
+    }
+}

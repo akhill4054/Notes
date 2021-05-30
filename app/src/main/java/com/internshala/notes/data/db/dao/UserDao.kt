@@ -1,25 +1,27 @@
 package com.internshala.notes.data.db.dao
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.internshala.notes.data.models.User
+import com.internshala.notes.data.models.UserWithNotes
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM users WHERE id LIKE :userId")
-    suspend fun getUserById(userId: String)
+    suspend fun getUserById(userId: String): User?
+
+    @Transaction
+    @Query("SELECT * FROM users WHERE id = :id")
+    suspend fun getUserWithNotesById(id: Long): UserWithNotes
 
     @Query("SELECT * FROM users ORDER BY id ASC LIMIT 1")
-    suspend fun getFirstUserFromUsers(): List<User>
+    suspend fun getFirstUserFromUsers(): User?
 
     @Insert
     suspend fun insert(user: User)
 
-    @Delete
-    suspend fun delete(user: User)
+    @Query("DELETE FROM users WHERE userId = :userId")
+    suspend fun deleteByUserId(userId: String)
 
     @Query("SELECT * FROM users ORDER BY id ASC")
     fun getAllUsers(): LiveData<List<User>>

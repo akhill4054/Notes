@@ -6,16 +6,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.internshala.notes.databinding.FragmentLoginBinding
+import com.internshala.notes.utils.GoogleSignInHelper
 import com.internshala.notes.viewmodels.LoginViewModel
 
 class LoginFragment : Fragment() {
@@ -31,42 +27,15 @@ class LoginFragment : Fragment() {
     private val _viewModel: LoginViewModel by viewModels()
 
     // Google sign-in
-    private val _gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestEmail()
-        .build()
-    private lateinit var _googleSignInClient: GoogleSignInClient
-
-    private lateinit var _googleSignInIntentLauncher: ActivityResultLauncher<Intent>
+    private val _googleSignInHelper by lazy {
+        GoogleSignInHelper(mContext)
+    }
+    private lateinit var _googleSignInRequestLauncher: ActivityResultLauncher<Intent>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         mContext = context
-
-        _googleSignInClient = GoogleSignIn.getClient(mContext, _gso)
-
-        val googleSignInIntentContract = object : ActivityResultContract<Intent, Intent?>() {
-            override fun createIntent(context: Context, input: Intent): Intent {
-                return input
-            }
-
-            override fun parseResult(resultCode: Int, intent: Intent?): Intent? {
-                return intent
-            }
-        }
-
-        val googleSignInResultCallback = ActivityResultCallback<Intent?> {
-            it?.let { data ->
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                // Request viewModel to handle the result
-                _viewModel.handleGoogleSignInResult(task)
-            }
-        }
-
-        _googleSignInIntentLauncher = registerForActivityResult(
-            googleSignInIntentContract,
-            googleSignInResultCallback
-        )
     }
 
     override fun onCreateView(
@@ -85,6 +54,12 @@ class LoginFragment : Fragment() {
         val googleSignInButton = binding.googleSingInButton
         googleSignInButton.setSize(SignInButton.SIZE_WIDE)
 
+        _googleSignInRequestLauncher =
+            _googleSignInHelper.getSignInIntentLauncher(this) { task ->
+                // Handle sign-in task result
+                _viewModel.handleGoogleSignInResult(task)
+            }
+
         // Click listeners
         binding.googleSingInButton.setOnClickListener {
             signInWithGoogle()
@@ -92,8 +67,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun signInWithGoogle() {
-        _googleSignInIntentLauncher
-            .launch(_googleSignInClient.signInIntent)
+        _googleSignInHelper.signIn(_googleSignInRequestLauncher)
     }
 
     override fun onDestroyView() {
