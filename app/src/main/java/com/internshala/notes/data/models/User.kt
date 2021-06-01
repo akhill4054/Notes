@@ -3,7 +3,12 @@ package com.internshala.notes.data.models
 import androidx.room.*
 import com.google.gson.Gson
 
-@Entity(tableName = "users")
+@Entity(
+    tableName = "users",
+    indices = [
+        Index(unique = true, value = ["userId"])
+    ]
+)
 data class User(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,

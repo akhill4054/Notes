@@ -66,22 +66,38 @@ class AuthRepository private constructor(application: Application) {
         _authStatus.postValue(OnUserChanged(newUser))
     }
 
-    suspend fun logout(user: User) {
+    fun getCurrentUser(): User? {
+        return when (val status = authStatus.value) {
+            is Authenticated -> status.user
+            is OnUserChanged -> status.user
+            else -> null
+        }
+    }
+
+    suspend fun removeCurrentUser() {
         val userRepository = UsersRepository.getInstance(_application)
 
-        var nextUser: User?
+        val prefs = PreferenceManager.getInstance(_application)
+        val user = prefs.getCurrentUser()
 
-        // Remove from db
-        withContext(Dispatchers.IO) {
-            userRepository.removeUser(user)
-            // Try to get the next user
-            nextUser = userRepository.getFirstUserFromUsers()
-        }
+        user?.let {
+            // Remove from prefs
+            prefs.setCurrentUser(null)
 
-        if (nextUser != null) {
-            switchUser(nextUser!!)
-        } else {
-            _authStatus.postValue(Unauthenticated)
+            var nextUser: User?
+
+            // Remove from db
+            withContext(Dispatchers.IO) {
+                userRepository.removeUser(user)
+                // Try to get the next user
+                nextUser = userRepository.getFirstUserFromUsers()
+            }
+
+            if (nextUser != null) {
+                switchUser(nextUser!!)
+            } else {
+                _authStatus.postValue(Unauthenticated)
+            }
         }
     }
 

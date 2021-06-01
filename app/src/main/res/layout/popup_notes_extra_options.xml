@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/surface_primary"
+    app:cardCornerRadius="@dimen/corners_md">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_md"
+        android:paddingBottom="@dimen/margin_sm"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/archive"
+            style="@style/popup_item">
+
+            <ImageView
+                android:contentDescription="@string/archive"
+                app:tint="@color/text_secondary"
+                android:src="@drawable/ic_archive_24"
+                style="@style/popup_item_icon" />
+
+            <TextView
+                style="@style/popup_item_text"
+                android:text="@string/archive"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/bin"
+            style="@style/popup_item">
+
+            <ImageView
+                android:contentDescription="@string/archive"
+                app:tint="@color/text_secondary"
+                android:src="@drawable/ic_auto_delete_24"
+                style="@style/popup_item_icon" />
+
+            <TextView
+                style="@style/popup_item_text"
+                android:text="@string/bin"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>

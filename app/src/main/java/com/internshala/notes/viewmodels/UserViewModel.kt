@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class UserViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _authRepository = AuthRepository.getInstance(application)
+    private val _usersRepository = UsersRepository.getInstance(application)
 
     val user: LiveData<User?> = _authRepository.authStatus.map { authStatus ->
         when (authStatus) {
@@ -22,16 +23,17 @@ class UserViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private val _allUsers = MutableLiveData<List<User>>()
-    val allUsers: LiveData<List<User>> = _allUsers
+    val otherUsers: LiveData<List<User>> = user.switchMap { user ->
+        _usersRepository.getOtherUsers(user?.userId ?: "")
+    }
 
     fun switchUser(user: User) {
         _authRepository.switchUser(user)
     }
 
-    fun logout(user: User) {
+    fun removeCurrentUser() {
         viewModelScope.launch(Dispatchers.IO) {
-            _authRepository.logout(user)
+            _authRepository.removeCurrentUser()
         }
     }
 }

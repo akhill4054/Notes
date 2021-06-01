@@ -10,10 +10,14 @@ import com.internshala.notes.R
 import com.internshala.notes.data.models.User
 import com.internshala.notes.databinding.ItemUserBinding
 
-class UserListAdapter : ListAdapter<User, UserListAdapter.UserViewHolder>(DiffUtilCallback()) {
+class UserListAdapter(
+    itemClickListener: ItemClickListener
+) : ListAdapter<User, UserListAdapter.UserViewHolder>(DiffUtilCallback()) {
+
+    private val _itemClickListener = itemClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        return UserViewHolder.from(parent)
+        return UserViewHolder.from(parent, _itemClickListener)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -21,16 +25,29 @@ class UserListAdapter : ListAdapter<User, UserListAdapter.UserViewHolder>(DiffUt
         return holder.bind(item)
     }
 
-    class UserViewHolder(binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    class UserViewHolder(
+        binding: ItemUserBinding,
+        itemClickListener: ItemClickListener
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         private val _binding: ItemUserBinding = binding
+
+        init {
+            // Click listener
+            _binding.root.setOnClickListener {
+                itemClickListener.onUserSelected(binding.user!!)
+            }
+        }
 
         fun bind(user: User) {
             _binding.user = user
         }
 
         companion object {
-            fun from(parent: ViewGroup): UserViewHolder {
+            fun from(
+                parent: ViewGroup,
+                itemClickListener: ItemClickListener,
+            ): UserViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
 
                 val binding = DataBindingUtil.inflate<ItemUserBinding>(
@@ -39,9 +56,14 @@ class UserListAdapter : ListAdapter<User, UserListAdapter.UserViewHolder>(DiffUt
                     parent,
                     false
                 )
-                return UserViewHolder(binding)
+
+                return UserViewHolder(binding, itemClickListener)
             }
         }
+    }
+
+    interface ItemClickListener {
+        fun onUserSelected(user: User)
     }
 
     class DiffUtilCallback : DiffUtil.ItemCallback<User>() {

@@ -23,11 +23,20 @@ class UsersRepository private constructor(application: Application) {
         _userDao.deleteByUserId(user.userId)
     }
 
+    suspend fun checkIfAlreadyExists(userId: String): Boolean {
+        val count = _userDao.getCountByUserId(userId)
+        return count > 0
+    }
+
     suspend fun getFirstUserFromUsers(): User? {
         return _userDao.getFirstUserFromUsers()
     }
 
-    fun getAllUsers(): LiveData<List<User>> = _userDao.getAllUsers()
+    fun getAllUsers(): LiveData<List<User>> =
+        _userDao.getAllUsers()
+
+    fun getOtherUsers(currentUserUid: String): LiveData<List<User>> =
+        _userDao.getOtherUsers(currentUserUid)
 
     companion object {
         @Volatile

@@ -18,13 +18,12 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/user_list_profile"
+            android:layout_height="@dimen/user_list_profile"
             android:contentDescription="@string/profile_pic"
             android:src="@drawable/img_profile_placeholder"
             app:civ_border_color="@color/text_secondary"
             app:civ_border_width="0.5dp"
-            app:error="@{@drawable/img_profile_placeholder}"
             app:imgUrl="@{user.picUrl}" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -49,11 +48,11 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_sm"
+                android:layout_marginTop="3dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="@{user.email}"
-                android:textSize="@dimen/text_md"
+                android:textSize="@dimen/text_sm"
                 app:isVisible='@{user.email != null &amp;&amp; user.email != ""}'
                 tools:text="asdf@gmail.com" />
         </androidx.appcompat.widget.LinearLayoutCompat>

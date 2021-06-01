@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/surface_primary"
+    android:paddingStart="@dimen/margin_lg"
+    android:paddingTop="@dimen/margin_lg"
+    android:paddingEnd="@dimen/margin_lg"
+    android:paddingBottom="@dimen/margin_lg">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
+        android:layout_margin="@dimen/margin_lg"
+        android:alpha="0.9"
+        android:src="@drawable/ic_warning_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/color_primary"
+        tools:ignore="ContentDescription" />
+
+    <ImageButton
+        android:id="@+id/close"
+        style="@style/icon_button_typical"
+        android:contentDescription="@string/close"
+        android:src="@drawable/ic_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/text_typical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_md"
+        android:gravity="center_horizontal"
+        android:text="@string/confirm_action"
+        android:textColor="@color/text_on_surface"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon" />
+
+    <TextView
+        android:id="@+id/text_message"
+        style="@style/text_typical"
+        android:layout_width="0dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_md"
+        android:text="@string/sure_you_want_to_do_this"
+        app:layout_constraintEnd_toEndOf="@+id/text_title"
+        app:layout_constraintStart_toStartOf="@+id/text_title"
+        app:layout_constraintTop_toBottomOf="@+id/text_title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/secondary_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="@string/cancel"
+        android:layout_marginEnd="@dimen/margin_lg"
+        app:cornerRadius="@dimen/corners_sm"
+        app:layout_constraintBottom_toBottomOf="@+id/action_button"
+        app:layout_constraintEnd_toStartOf="@+id/action_button"
+        app:layout_constraintTop_toTopOf="@+id/action_button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cornerRadius="@dimen/corners_sm"
+        android:layout_marginTop="24dp"
+        android:text="@string/yes_please"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_message" />
+</androidx.constraintlayout.widget.ConstraintLayout>

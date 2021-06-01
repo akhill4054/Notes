@@ -10,8 +10,11 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.gms.common.SignInButton
+import com.internshala.notes.R
 import com.internshala.notes.databinding.FragmentLoginBinding
+import com.internshala.notes.ui.interfaces.SnackBarListener
 import com.internshala.notes.utils.GoogleSignInHelper
+import com.internshala.notes.viewmodels.LoginStatus
 import com.internshala.notes.viewmodels.LoginViewModel
 
 class LoginFragment : Fragment() {
@@ -32,10 +35,17 @@ class LoginFragment : Fragment() {
     }
     private lateinit var _googleSignInRequestLauncher: ActivityResultLauncher<Intent>
 
+    private lateinit var _snackBarListener: SnackBarListener
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         mContext = context
+        try {
+            _snackBarListener = context as SnackBarListener
+        } catch (e: Exception) {
+            throw RuntimeException("${context::class.simpleName} must implement ${SnackBarListener::class.simpleName}!")
+        }
     }
 
     override fun onCreateView(
@@ -64,6 +74,13 @@ class LoginFragment : Fragment() {
         binding.googleSingInButton.setOnClickListener {
             signInWithGoogle()
         }
+
+        // Subscribe observers here
+        _viewModel.loginStatus.observe(viewLifecycleOwner, { status ->
+            if (status is LoginStatus.Error) {
+                _snackBarListener.onShowSnackBar(getString(R.string.error_typical))
+            }
+        })
     }
 
     private fun signInWithGoogle() {

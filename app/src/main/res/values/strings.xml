@@ -1,13 +1,56 @@
 <resources>
     <string name="app_name">Notes</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!--  Warning/errors  -->
+    <string name="error_typical">Something went wrong, please try again</string>
+    <string name="error_already_logged_in">Already logged in!</string>
+
+    <!--  Messages  -->
+    <string name="msg_note_saved">Note saved</string>
+    <string name="msg_note_modified">Note modified</string>
+    <string name="msg_note_archived">Note archived</string>
+    <string name="msg_note_binned">Note moved to bin</string>
+    <string name="msg_note_deleted">Note deleted</string>
+    <string name="msg_note_restored">Note restored</string>
+    <string name="msg_note_unarchived">Note unarchived</string>
+    <string name="msg_note_discarded">Empty note discarded</string>
+    <string name="msg_permanent_delete">Note will be permanently deleted.</string>
+    <string name="msg_binned_notes">Notes in bin are automatically deleted in 7 days.</string>
+
+    <string name="confirm_delete">Confirm delete</string>
     <string name="welcome_to_app">Welcome to Notes</string>
     <string name="login">Login</string>
     <string name="welcome_app_msg">Easily create and manage your notes.</string>
     <string name="please_sign_in_to_continue">Please sign in to continue</string>
-    <string name="add_another_account">Add another account</string>
+    <string name="add_another_account">Add another account.</string>
     <string name="profile_pic">Profile pic</string>
     <string name="remove_account">Remove Account</string>
+    <string name="make_a_note">Make a note</string>
+    <string name="notes">Notes</string>
+    <string name="no_notes">No notes</string>
+    <string name="no_archives">No archives</string>
+    <string name="no_binned_notes">No deleted notes</string>
+    <string name="options_menu">Options menu</string>
+    <string name="change_theme">Change theme</string>
+    <string name="account_options">Account options</string>
+    <string name="bin">Bin</string>
+    <string name="close">Close</string>
+    <string name="confirm_logout">Confirm Logout.</string>
+    <string name="yes_logout">Yes, logout</string>
+    <string name="cancel">Cancel</string>
+    <string name="created_on_s">created: %s</string>
+    <string name="note_options_menu">Note options menu</string>
+    <string name="title">Title</string>
+    <string name="note">Note</string>
+    <string name="warn_logout_msg">You won\'t be able to view your notes created under this account.</string>
+    <string name="last_modified_s">Last modified: %s</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="move_to_bin">Move to bin</string>
+    <string name="archive">Archive</string>
+    <string name="confirm_action">Confirm action</string>
+    <string name="sure_you_want_to_do_this">Sure, you want to do this?</string>
+    <string name="yes_please">Yes Please</string>
+    <string name="unarchive">Unarchive</string>
+    <string name="remove_from_bin">Remove from bin</string>
 </resources>

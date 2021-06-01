@@ -32,7 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
                     val db = Room.databaseBuilder(
                         application,
                         AppDatabase::class.java, "notes-app-db"
-                    ).build()
+                    ).fallbackToDestructiveMigration().build()
 
                     // Init static field
                     INSTANCE = db

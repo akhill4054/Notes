@@ -1,59 +1,168 @@
 package com.internshala.notes.ui.fragments
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.internshala.notes.R
+import com.internshala.notes.data.models.Note
+import com.internshala.notes.databinding.FragmentEditNoteBinding
+import com.internshala.notes.ui.interfaces.MainActivityListener
+import com.internshala.notes.ui.interfaces.SnackBarListener
+import com.internshala.notes.utils.AppUiHelper
+import com.internshala.notes.viewmodels.EditNoteViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [EditNoteFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val ARG_NOTE = "note"
+
 class EditNoteFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _binding: FragmentEditNoteBinding? = null
+
+    private val binding get() = _binding!!
+
+    private val _viewModel: EditNoteViewModel by activityViewModels()
+
+    private lateinit var _activityListener: MainActivityListener
+    private lateinit var _snackBarListener: SnackBarListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        _activityListener = context as MainActivityListener
+        _snackBarListener = context as SnackBarListener
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        val note: Note? = arguments?.getParcelable(ARG_NOTE)
+        _viewModel.setCurrentEditableNote(note)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_note, container, false)
+        _binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_edit_note,
+            container,
+            false
+        )
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Setup views here
+        binding.editTextTitle.setOnEditorActionListener { _, actionId, _ ->
+            // Triggered when done editing (as clicked done on keyboard)
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.editTextTitle.clearFocus()
+            }
+            false
+        }
+
+        // Click listeners
+        binding.toolbar.setNavigationOnClickListener {
+            _activityListener.navigateBack()
+        }
+        // Note options menu
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            val note = binding.note ?: return@setOnMenuItemClickListener false
+
+            when (item.itemId) {
+                R.id.archive -> {
+                    _viewModel.archive(note)
+                    // Show message
+                    _snackBarListener.onShowSnackBar(
+                        getString(R.string.msg_note_archived)
+                    )
+                }
+                R.id.bin -> {
+                    _viewModel.bin(note)
+                    // Show message
+                    _snackBarListener.onShowSnackBar(
+                        getString(R.string.msg_note_binned)
+                    )
+                }
+                R.id.unarchive -> {
+                    _viewModel.unarchive(note)
+                    // Show message
+                    _snackBarListener.onShowSnackBar(
+                        getString(R.string.msg_note_unarchived)
+                    )
+                }
+                R.id.delete -> {
+                    AppUiHelper.showDeleteConfirmation(requireContext()) {
+                        _viewModel.delete(note)
+                        // Show message
+                        _snackBarListener.onShowSnackBar(
+                            getString(R.string.msg_note_deleted)
+                        )
+                        _activityListener.navigateBack()
+                    }
+                    return@setOnMenuItemClickListener true
+                }
+            }
+            _activityListener.navigateBack()
+            true
+        }
+
+        subscribeObservers()
+    }
+
+    private fun subscribeObservers() {
+        _viewModel.note.observe(viewLifecycleOwner, { note ->
+            if (note.createdOn == null) {
+                // Fresh note, show keyboard
+                binding.editTextNote.requestFocus()
+                val imm =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(
+                    InputMethodManager.SHOW_FORCED,
+                    InputMethodManager.HIDE_IMPLICIT_ONLY
+                )
+            }
+            // Setup toolbar menu
+            val menu = binding.toolbar.menu
+
+            // As archived notes are allowed to be edited
+            if (note.isArchived()) {
+                menu.removeItem(R.id.archive)
+            } else {
+                menu.removeItem(R.id.unarchive)
+            }
+
+            binding.note = note
+        })
+    }
+
+    override fun onDestroyView() {
+        // Saving note
+        val title = binding.editTextTitle.text.toString()
+        val noteText = binding.editTextNote.text.toString()
+
+        _viewModel.saveNote(title, noteText)
+
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EditNoteFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(note: Note) =
             EditNoteFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    putParcelable(ARG_NOTE, note)
                 }
             }
     }

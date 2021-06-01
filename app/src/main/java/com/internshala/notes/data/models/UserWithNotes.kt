@@ -8,7 +8,7 @@ data class UserWithNotes(
     val user: User,
     @Relation(
         parentColumn = "id",
-        entityColumn = "userCreatorId"
+        entityColumn = "userCreatorUid"
     )
     val notes: List<Note>
 )

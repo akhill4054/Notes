@@ -11,6 +11,7 @@ class PreferenceManager private constructor(application: Application) {
         "${BuildConfig.APPLICATION_ID}.ASSESSMENT.PREFS_FILE_KEY", Context.MODE_PRIVATE
     )
 
+    // Current user
     fun getCurrentUser(): User? {
         val json = getString(KEY_USER)
 
@@ -21,8 +22,25 @@ class PreferenceManager private constructor(application: Application) {
         }
     }
 
-    fun setCurrentUser(user: User) {
-        putString(KEY_USER, user.toJson())
+    fun setCurrentUser(user: User?) {
+        putString(KEY_USER, user?.toJson() ?: "")
+    }
+
+    // Theme
+    fun setIsDarkMode(isDarkMode: Boolean) {
+        putBool(KEY_IS_DARK_MODE, isDarkMode)
+    }
+
+    fun getIsDarkMode(): Boolean {
+        return getBool(KEY_IS_DARK_MODE)
+    }
+
+    fun updateThemeModifiedFlag() {
+        putBool(KEY_WAS_THEME_EVER_MODIFIED, true)
+    }
+
+    fun getIsThemeEverModified(): Boolean {
+        return getBool(KEY_WAS_THEME_EVER_MODIFIED)
     }
 
     private fun getString(key: String): String {
@@ -33,14 +51,6 @@ class PreferenceManager private constructor(application: Application) {
         val editor = _sharedPrefs.edit()
         editor.putString(key, value)
         editor.apply()
-    }
-
-    private fun setIsDarkMode(isDarkMode: Boolean) {
-        putBool(KEY_IS_DARK_MODE, isDarkMode)
-    }
-
-    private fun getIsDarkMode(): Boolean {
-        return getBool(KEY_IS_DARK_MODE)
     }
 
     private fun getBool(key: String): Boolean {
@@ -56,6 +66,7 @@ class PreferenceManager private constructor(application: Application) {
     companion object {
         private const val KEY_USER = "user"
         private const val KEY_IS_DARK_MODE = "is_dark_mode"
+        private const val KEY_WAS_THEME_EVER_MODIFIED = "was_theme_ever_modified"
 
         @Volatile
         private var INSTANCE: PreferenceManager? = null

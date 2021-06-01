@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="text_secondary">#C0CBD3</color>
+    <color name="surface_primary">#1B1E20</color>
+    <color name="surface_secondary">#0F0F10</color>
+
+    <color name="text_on_surface">#D6DCE8</color>
+    <color name="text_secondary">#A1AAAF</color>
+    <color name="text_very_light">#787F83</color>
 </resources>

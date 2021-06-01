@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.EditNoteFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <data>
+
+        <variable
+            name="note"
+            type="com.internshala.notes.data.models.Note" />
+
+        <import type="com.internshala.notes.utils.TimestampHelper" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/surface_primary"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:context=".ui.fragments.EditNoteFragment">
 
-</FrameLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            app:popupTheme="@style/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/note_edit_mode"
+            app:navigationIcon="@drawable/ic_arrow_back_ios_24"
+            app:navigationIconTint="@color/text_secondary" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="@{@string/last_modified_s(TimestampHelper.toTimeDateAnyMonthFormat(note.lastModified))}"
+            android:textColor="@color/text_very_light"
+            android:textSize="@dimen/text_md"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="last modified: 02 AM on 20 July 2020" />
+
+        <EditText
+            android:id="@+id/edit_text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/margin_md"
+            android:layout_marginEnd="20dp"
+            android:background="@null"
+            android:hint="@string/title"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:maxLines="3"
+            android:text="@{note.title}"
+            android:textColor="@color/text_on_surface"
+            android:textColorHint="@color/text_very_light"
+            android:textSize="@dimen/text_lg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/edit_text_note"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_lg"
+            android:layout_marginBottom="@dimen/margin_md"
+            android:background="@null"
+            android:gravity="start"
+            android:hint="@string/note"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:text="@{note.note}"
+            android:textColor="@color/text_on_surface"
+            android:textColorHint="@color/text_very_light"
+            android:textSize="@dimen/text_typical"
+            app:layout_constraintBottom_toTopOf="@+id/textView8"
+            app:layout_constraintEnd_toEndOf="@+id/edit_text_title"
+            app:layout_constraintStart_toStartOf="@+id/edit_text_title"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_title"
+            tools:ignore="LabelFor" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

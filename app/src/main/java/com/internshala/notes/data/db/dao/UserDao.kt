@@ -23,6 +23,12 @@ interface UserDao {
     @Query("DELETE FROM users WHERE userId = :userId")
     suspend fun deleteByUserId(userId: String)
 
+    @Query("SELECT COUNT(userId) FROM users WHERE userId = :userId")
+    suspend fun getCountByUserId(userId: String): Int
+
     @Query("SELECT * FROM users ORDER BY id ASC")
     fun getAllUsers(): LiveData<List<User>>
+
+    @Query("SELECT * FROM users WHERE userId != :currentUserUid ORDER BY id ASC")
+    fun getOtherUsers(currentUserUid: String): LiveData<List<User>>
 }

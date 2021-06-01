@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/archive"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_archive_24"
+        android:title="@string/archive" />
+
+    <item
+        android:id="@+id/bin"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_auto_delete_24"
+        android:title="@string/move_to_bin" />
+
+    <item
+        android:id="@+id/R.id.unarchive"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_unarchive_24"
+        android:title="@string/unarchive" />
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/ic_delete_forever_24"
+        app:showAsAction="ifRoom"
+        android:title="@string/delete" />
+</menu>

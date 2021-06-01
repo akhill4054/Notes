@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="user"
+            type="com.internshala.notes.data.models.User" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/margin_md"
+        android:background="@color/surface_primary"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/close"
+            style="@style/icon_button_typical"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_sm"
+            android:layout_marginEnd="@dimen/margin_md"
+            android:contentDescription="@string/close"
+            android:src="@drawable/ic_close_24" />
+
+        <include
+            android:id="@+id/current_user"
+            layout="@layout/item_current_user"
+            app:user="@{user}" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/users"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="2"
+            tools:listitem="@layout/item_user" />
+
+        <include
+            android:id="@+id/add_another_account"
+            layout="@layout/item_add_another_account" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

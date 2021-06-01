@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="note"
+            type="com.internshala.notes.data.models.Note" />
+
+        <import type="com.internshala.notes.utils.TimestampHelper" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_md"
+        android:layout_marginBottom="@dimen/margin_md"
+        android:background="@drawable/bg_note_item"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin_lg"
+        android:paddingStart="@dimen/margin_lg"
+        android:paddingBottom="@dimen/margin_lg">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:layout_gravity="center_vertical"
+                android:maxLines="1"
+                android:text="@{note.title}"
+                android:textColor="@color/text_on_surface"
+                android:textSize="@dimen/text_typical"
+                app:isVisible='@{note.title != ""}'
+                tools:text="Note example title" />
+
+            <ImageButton
+                android:id="@+id/note_options_menu"
+                style="@style/icon_button_typical"
+                android:contentDescription="@string/note_options_menu"
+                android:src="@drawable/ic_more_vert_24" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/corners_md"
+            android:alpha="0.9"
+            android:ellipsize="end"
+            android:maxLines="10"
+            android:layout_marginEnd="@dimen/margin_lg"
+            android:text="@{note.note}"
+            android:textColor="@color/text_on_surface"
+            android:textSize="@dimen/text_md"
+            app:isVisible='@{note.note != ""}'
+            tools:text="This is a sample note and I don not know what to say. asuhadasd duasd duasd sudabud uadifh .. .. ." />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/margin_md"
+            android:layout_marginEnd="@dimen/corners_md"
+            android:text="@{TimestampHelper.toDateAndMonthFormat(note.lastModified)}"
+            android:textSize="13dp"
+            tools:ignore="SpUsage"
+            tools:text="12 Jul 2021" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

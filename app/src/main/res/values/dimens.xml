@@ -4,8 +4,21 @@
     <dimen name="margin_md">10dp</dimen>
     <dimen name="margin_lg">15dp</dimen>
 
+    <dimen name="corners_sm">5dp</dimen>
+    <dimen name="corners_md">10dp</dimen>
+    <dimen name="corners_lg">15dp</dimen>
+
     <dimen name="text_sm">14sp</dimen>
-    <dimen name="text_md">17sp</dimen>
+    <dimen name="text_md">16sp</dimen>
     <dimen name="text_typical">18sp</dimen>
     <dimen name="text_lg">22sp</dimen>
+    <dimen name="text_xl">24sp</dimen>
+    <dimen name="text_xxl">26sp</dimen>
+
+    <dimen name="user_list_profile">40dp</dimen>
+
+    <dimen name="empty_box_icon">65dp</dimen>
+    <item name="empty_box_icon_alpha" format="float" type="dimen">0.7</item>
+
+    <dimen name="ic_menu_item">28dp</dimen>
 </resources>

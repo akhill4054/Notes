@@ -10,18 +10,19 @@
     android:background="?attr/selectableItemBackground">
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:tint="?attr/colorOnSurface"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="4dp"
+        app:tint="@color/text_secondary"
+        android:alpha="0.9"
         android:contentDescription="@string/add_another_account"
         android:src="@drawable/ic_person_add_24"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_lg"
-        android:textStyle="bold"
-        app:tint="?attr/colorOnSurface"
+        android:layout_marginStart="19dp"
+        app:tint="@color/text_secondary"
         android:text="@string/add_another_account"
         style="@style/text_typical" />
 </androidx.appcompat.widget.LinearLayoutCompat>

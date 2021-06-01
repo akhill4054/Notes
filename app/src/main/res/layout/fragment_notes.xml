@@ -1,18 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.NotesFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/sign_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Out"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="isDarkMode"
+            type="Boolean" />
+
+        <variable
+            name="user"
+            type="com.internshala.notes.data.models.User" />
+
+        <variable
+            name="isNotesEmpty"
+            type="Boolean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/surface_secondary"
+        tools:context=".ui.fragments.NotesFragment">
+
+        <ImageButton
+            android:id="@+id/theme_button"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="@dimen/margin_md"
+            android:background="?attr/actionBarItemBackground"
+            android:contentDescription="@string/change_theme"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@{isDarkMode ? @drawable/ic_sun : @drawable/ic_moon}"
+            app:layout_constraintBottom_toBottomOf="@+id/account_options"
+            app:layout_constraintEnd_toStartOf="@+id/account_options"
+            app:layout_constraintTop_toTopOf="@+id/account_options"
+            tools:src="@drawable/ic_sun" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/account_options"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="@dimen/margin_lg"
+            android:layout_marginEnd="@dimen/margin_sm"
+            android:padding="5dp"
+            android:background="?attr/actionBarItemBackground"
+            android:clickable="@{user != null}"
+            android:contentDescription="@string/account_options"
+            android:src="@drawable/img_profile_placeholder"
+            app:civ_border_color="@color/color_primary"
+            app:civ_border_width="2dp"
+            app:imgUrl="@{user.picUrl}"
+            app:layout_constraintEnd_toEndOf="@+id/search_notes"
+            app:layout_constraintEnd_toStartOf="@+id/notes_extra_options"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/notes_extra_options"
+            style="@style/icon_button_typical"
+            android:layout_marginEnd="24dp"
+            android:contentDescription="@string/options_menu"
+            android:src="@drawable/ic_more_vert_24"
+            app:layout_constraintBottom_toBottomOf="@+id/account_options"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/account_options" />
+
+        <TextView
+            android:id="@+id/textView6"
+            style="@style/text_typical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/notes"
+            android:textSize="@dimen/text_xxl"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/account_options"
+            app:layout_constraintStart_toStartOf="@+id/search_notes"
+            app:layout_constraintTop_toTopOf="@+id/account_options" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search_notes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/bg_search_view"
+            android:elevation="2dp"
+            android:padding="3dp"
+            app:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:queryBackground="@android:color/transparent"
+            app:queryHint="Search your notes" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notes"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="@dimen/margin_lg"
+            tools:listitem="@layout/item_note"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_notes" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="24dp"
+            android:contentDescription="@string/make_a_note"
+            android:src="@drawable/ic_add_24"
+            app:backgroundTint="?attr/colorAccent"
+            app:fabCustomSize="64dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="40dp" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/empty_box_icon"
+            android:layout_height="@dimen/empty_box_icon"
+            android:alpha="@dimen/empty_box_icon_alpha"
+            android:contentDescription="@string/no_notes"
+            android:src="@drawable/ic_empty"
+            android:visibility="gone"
+            app:isVisible="@{isNotesEmpty}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/search_notes"
+            app:layout_constraintVertical_bias="0.39"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/text_no_notes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_md"
+            android:text="@string/no_notes"
+            tools:visibility="visible"
+            android:textSize="@dimen/text_lg"
+            app:isVisible="@{isNotesEmpty}"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/imageView2"
+            app:layout_constraintStart_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -4,10 +4,15 @@
     <color name="color_primary">#4C5EEA</color>
     <color name="color_primary_variant">#2B3ECD</color>
 
-    <color name="color_secondary">#1E2022</color>
-    <color name="color_secondary_variant">#13181B</color>
+    <color name="color_secondary">#282D32</color>
+    <color name="color_secondary_variant">#23282C</color>
 
+    <color name="surface_primary">#FAFAFA</color>
+    <color name="surface_secondary">#E9EDF1</color>
+
+    <color name="text_on_surface">#1F2022</color>
     <color name="text_secondary">#35383A</color>
+    <color name="text_very_light">#585E61</color>
 
     <!--  Generic colors  -->
     <color name="black">#FF000000</color>
@@ -15,4 +20,6 @@
 
     <color name="yellow_primary">#FFDA00</color>
     <color name="yellow_secondary">#E7B913</color>
+
+    <color name="error">#F44336</color>
 </resources>
