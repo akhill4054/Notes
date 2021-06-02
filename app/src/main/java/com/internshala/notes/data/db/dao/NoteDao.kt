@@ -15,13 +15,16 @@ interface NoteDao {
     @Query("SELECT * FROM notes WHERE userCreatorUid = :userId AND status = ${Note.NOTE_STATUS_DELETED} ORDER BY id DESC")
     fun getBinnedUserNotes(userId: String): LiveData<List<Note>>
 
+    @Query("SELECT * FROM notes WHERE userCreatorUid = :userId AND status = ${Note.NOTE_STATUS_DELETED} ORDER BY id DESC")
+    suspend fun getBinnedUserNotesAsync(userId: String): List<Note>
+
     @Query("SELECT * FROM notes WHERE title LIKE '%' || :query || '%'")
     suspend fun searchNotesByTitle(query: String): List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(note: Note)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(note: Note)
 
     @Delete

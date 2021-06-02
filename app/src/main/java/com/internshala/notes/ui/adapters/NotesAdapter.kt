@@ -131,7 +131,7 @@ class NotesAdapter(
         }
 
         override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem.lastModified != newItem.lastModified
+            return oldItem == newItem
         }
     }
 

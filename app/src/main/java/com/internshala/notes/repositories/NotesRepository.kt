@@ -28,6 +28,10 @@ class NotesRepository(application: Application) {
         return _noteDao.getArchivedUserNotes(user.userId)
     }
 
+    suspend fun getBinnedUserNotesAsync(user: User): List<Note> {
+        return _noteDao.getBinnedUserNotesAsync(user.userId)
+    }
+
     fun getBinnedUserNotes(user: User): LiveData<List<Note>> {
         return _noteDao.getBinnedUserNotes(user.userId)
     }

@@ -2,6 +2,7 @@ package com.internshala.notes.ui.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import androidx.appcompat.widget.SearchView.OnQueryTextListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.internshala.notes.R
@@ -43,7 +43,7 @@ class NotesFragment : Fragment(), View.OnClickListener,
     private val _userViewModel: UserViewModel by activityViewModels()
     private val _appViewModel: AppViewModel by activityViewModels()
     private val _editNoteViewModel: EditNoteViewModel by activityViewModels()
-    private val _notesViewModel: NotesViewModel by viewModels()
+    private val _notesViewModel: NotesViewModel by activityViewModels()
 
     // Adapters
     private val _userAdapter by lazy { UserListAdapter(this) }

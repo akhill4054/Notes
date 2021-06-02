@@ -32,3 +32,9 @@
 -keep class com.bumptech.glide.load.data.ParcelFileDescriptorRewinder$InternalRewinder {
   *** rewind();
 }
+
+# Google
+-keep class com.google.googlesignin.** { *; }
+-keepnames class com.google.googlesignin.* { *; }
+
+-keep class com.google.android.gms.auth.** { *; }

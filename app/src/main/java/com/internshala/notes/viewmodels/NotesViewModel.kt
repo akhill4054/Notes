@@ -11,11 +11,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 class NotesViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _authRepository = AuthRepository.getInstance(application)
     private val _notesRepository = NotesRepository.getInstance(application)
+
+    init {
+        deleteBinnedNotes()
+    }
 
     val userNotes: LiveData<List<Note>> = _authRepository.authStatus.switchMap { authStatus ->
         when (authStatus) {
@@ -46,6 +51,24 @@ class NotesViewModel(application: Application) : AndroidViewModel(application) {
                 // Wait for query change before search
                 delay(200)
                 _searchResult.postValue(_notesRepository.searchNotesByTitle(query))
+            }
+        }
+    }
+
+    private fun deleteBinnedNotes() {
+        val user = _authRepository.getCurrentUser()
+        user?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                val now = Calendar.getInstance().time.time
+                val binnedNotes = _notesRepository.getBinnedUserNotesAsync(user)
+
+                val deleteDurationDaysInMillis = 7 * 24 * 60 * 60 * 1000
+
+                for (note in binnedNotes) {
+                    if (now - note.deletedOn!!.time >= deleteDurationDaysInMillis) {
+                        _notesRepository.delete(note)
+                    }
+                }
             }
         }
     }
